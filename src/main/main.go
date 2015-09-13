@@ -88,7 +88,7 @@ func main() {
 				log.Println("Got error: %v", err)
 				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I've got error =("))
 			} else {
-				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatUint(rate.Rate, 10)))
+				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatFloat(rate.Rate, "E", 2, 64)))
 			}
 		case "/eur":
 			rate, err := financeService.GetRate(finance.EUR, finance.RUB)
@@ -96,7 +96,7 @@ func main() {
 				log.Println("Got error: %v", err)
 				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I've got error =("))
 			} else {
-				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatUint(rate.Rate, 10)))
+				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatFloat(rate.Rate, "E", 2, 64)))
 			}
 		}
 	}
