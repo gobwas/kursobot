@@ -11,11 +11,17 @@ import (
 	"net/url"
 )
 
+type SSL struct {
+	Certificate string
+	Key         string
+}
+
 type Config struct {
 	Scheme string
 	Host   string
 	Token  string
 	Debug  bool
+	SSL    SSL
 }
 
 func main() {
@@ -58,13 +64,13 @@ func main() {
 		Host:   config.Host,
 		Path:   config.Token,
 	}
-	if _, err := bot.SetWebhook(tgbotapi.WebhookConfig{URL: &webHookUrl, Certificate: "server.crt"}); err != nil {
+	if _, err := bot.SetWebhook(tgbotapi.WebhookConfig{URL: &webHookUrl, Certificate: config.SSL.Certificate}); err != nil {
 		log.Panic("Could not set webhook", err)
 		return
 	}
 
 	bot.ListenForWebhook()
-	go http.ListenAndServeTLS(":443", "server.crt", "server.key", nil)
+	go http.ListenAndServeTLS(":443", config.SSL.Certificate, config.SSL.Key, nil)
 
 	for update := range bot.Updates {
 		log.Printf("%+v\n", update)
