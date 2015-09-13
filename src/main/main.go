@@ -85,7 +85,7 @@ func main() {
 		case "/usd":
 			rate, err := financeService.GetRate(finance.USD, finance.RUB)
 			if err != nil {
-				log.Println("Got error: %v", err)
+				log.Println("Got error:", err)
 				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I've got error =("))
 			} else {
 				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatFloat(rate.Rate, 'E', 2, 64)))
@@ -93,7 +93,7 @@ func main() {
 		case "/eur":
 			rate, err := financeService.GetRate(finance.EUR, finance.RUB)
 			if err != nil {
-				log.Println("Got error: %v", err)
+				log.Println("Got error:", err)
 				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I've got error =("))
 			} else {
 				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatFloat(rate.Rate, 'E', 2, 64)))

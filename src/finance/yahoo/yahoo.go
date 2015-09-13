@@ -23,10 +23,14 @@ type Response struct {
 }
 
 type Result struct {
-	Count   int         `json:"count"`
-	Created string      `json:"created"`
-	Lang    string      `json:"lang"`
-	Results []YahooRate `json:"results"`
+	Count   int        `json:"count"`
+	Created string     `json:"created"`
+	Lang    string     `json:"lang"`
+	Results ResultRate `json:"results"`
+}
+
+type ResultRate struct {
+	Rate []YahooRate `json:"rate"`
 }
 
 type YahooRate struct {
@@ -72,8 +76,6 @@ func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Curre
 	if err != nil {
 		return nil, err
 	}
-
-	log.Println("Got response from yahoo: %v", string(contents))
 
 	var r Response
 	if err := json.Unmarshal(contents, &r); err != nil {
