@@ -55,12 +55,12 @@ func main() {
 
 	go http.ListenAndServeTLS("0.0.0.0:443", "server.crt", "server.key", nil)
 
-	webHookUrl := url.URL{
-		Scheme: config.Scheme,
-		Host:   config.Host,
-		Path:   config.Token,
-	}
-	if _, err := bot.SetWebhook(tgbotapi.NewWebhookWithCert(webHookUrl.String(), "server.crt")); err != nil {
+	//	webHookUrl := url.URL{
+	//		Scheme: config.Scheme,
+	//		Host:   config.Host,
+	//		Path:   config.Token,
+	//	}
+	if _, err := bot.SetWebhook(tgbotapi.NewWebhookWithCert("https://kursobot.gobwas.com", "server.crt")); err != nil {
 		log.Panic("Could not set webhook", err)
 		return
 	}
