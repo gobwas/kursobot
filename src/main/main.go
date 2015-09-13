@@ -50,17 +50,20 @@ func main() {
 		return
 	}
 	bot.Debug = config.Debug
+	log.Println("Initialized bot")
 
 	webHookUrl := url.URL{
 		Scheme: config.Scheme,
 		Host:   config.Host,
 		Path:   config.Token,
 	}
-	if _, err := bot.SetWebhook(tgbotapi.WebhookConfig{URL: &webHookUrl}); err != nil {
+	if _, err := bot.SetWebhook(tgbotapi.NewWebhookWithCert(webHookUrl.String(), "server.crt")); err != nil {
 		log.Panic("Could not set webhook", err)
 		return
 	}
+
 	bot.ListenForWebhook()
+	go http.ListenAndServeTLS("0.0.0.0:443", "server.crt", "server.key", nil)
 
 	for update := range bot.Updates {
 		log.Printf("%+v\n", update)
