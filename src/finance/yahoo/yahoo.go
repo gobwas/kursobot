@@ -1,11 +1,13 @@
 package yahoo
 
 import (
+	"encoding/json"
 	"finance"
-	"net/url"
 	"fmt"
-	"net/http"
 	"io/ioutil"
+	"log"
+	"net/http"
+	"net/url"
 )
 
 type YahooFinanceService struct {
@@ -14,6 +16,26 @@ type YahooFinanceService struct {
 
 type Config struct {
 	Url string
+}
+
+type Response struct {
+	Query []Result `json:"query"`
+}
+
+type Result struct {
+	Count   int         `json:"count"`
+	Created string      `json:"created"`
+	Lang    string      `json:"lang"`
+	Results []YahooRate `json:"results"`
+}
+
+type YahooRate struct {
+	Id   string `json:"id"`
+	Name string
+	Rate float64
+	Date string
+	Ask  float64
+	Bid  float64
 }
 
 func New(config Config) (*YahooFinanceService, error) {
@@ -36,7 +58,7 @@ func New(config Config) (*YahooFinanceService, error) {
 func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Currency) (*finance.Rate, error) {
 	// prepare params
 	parameters := url.Values{}
-	parameters.Add("q", "select * from yahoo.finance.xchange where pair in (\"EURUSD\",\"EURRUB\", \"USDRUB\")")
+	parameters.Add("q", fmt.Sprintf("select * from yahoo.finance.xchange where pair in (\"%s%s\")", from, to))
 	Url := self.Url + "&" + parameters.Encode()
 
 	var response *http.Response
@@ -51,8 +73,10 @@ func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Curre
 		return nil, err
 	}
 
-	fmt.Println("Request!")
-	fmt.Println(fmt.Sprintf("%s => %s", Url, string(contents)))
+	log.Println("Got response from yahoo: %v", string(contents))
 
-	return &finance.Rate{Rate:0}, nil
+	var response Response
+	json.Unmarshal(contents, &response)
+
+	return &finance.Rate{Rate: response.Query[0].Results[0].Rate}, nil
 }
