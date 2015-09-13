@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
+	//	"net/url"
 )
 
 type Config struct {
