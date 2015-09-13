@@ -53,6 +53,8 @@ func main() {
 	bot.Debug = config.Debug
 	log.Println("Initialized bot")
 
+	go http.ListenAndServeTLS("0.0.0.0:443", "server.crt", "server.key", nil)
+
 	webHookUrl := url.URL{
 		Scheme: config.Scheme,
 		Host:   config.Host,
@@ -62,9 +64,7 @@ func main() {
 		log.Panic("Could not set webhook", err)
 		return
 	}
-
 	bot.ListenForWebhook()
-	go http.ListenAndServeTLS("0.0.0.0:443", "server.crt", "server.key", nil)
 
 	for update := range bot.Updates {
 		log.Printf("%+v\n", update)
