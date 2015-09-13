@@ -30,7 +30,7 @@ type Result struct {
 }
 
 type ResultRate struct {
-	Rate []YahooRate `json:"rate"`
+	Rate YahooRate `json:"rate"`
 }
 
 type YahooRate struct {
@@ -40,7 +40,7 @@ type YahooRate struct {
 	Date string
 	Time string
 	Ask  string
-	Bid  string
+	Bid  float64
 }
 
 func New(config Config) (*YahooFinanceService, error) {
@@ -85,7 +85,7 @@ func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Curre
 		return nil, err
 	}
 
-	rate, err := strconv.ParseFloat(r.Query.Results.Rate[0].Rate, 64)
+	rate, err := strconv.ParseFloat(r.Query.Results.Rate.Rate, 64)
 	if err != nil {
 		return nil, err
 	}
