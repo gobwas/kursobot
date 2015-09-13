@@ -76,7 +76,9 @@ func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Curre
 	log.Println("Got response from yahoo: %v", string(contents))
 
 	var r Response
-	json.Unmarshal(contents, &r)
+	if err := json.Unmarshal(contents, &r); err != nil {
+		return nil, err
+	}
 
 	return &finance.Rate{Rate: r.Query[0].Results[0].Rate}, nil
 }
