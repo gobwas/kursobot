@@ -83,5 +83,10 @@ func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Curre
 		return nil, err
 	}
 
-	return &finance.Rate{Rate: strconv.ParseFloat(r.Query.Results.Rate[0].Rate, 64)}, nil
+	rate, err := strconv.ParseFloat(r.Query.Results.Rate[0].Rate, 64)
+	if err != nil {
+		return nil, err
+	}
+
+	return &finance.Rate{Rate: rate}, nil
 }
