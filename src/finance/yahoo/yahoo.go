@@ -40,7 +40,7 @@ type YahooRate struct {
 	Date string
 	Time string
 	Ask  string
-	Bid  float64
+	Bid  string
 }
 
 func New(config Config) (*YahooFinanceService, error) {
