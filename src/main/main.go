@@ -5,6 +5,7 @@ import (
 	"flag"
 	"github.com/BurntSushi/toml"
 	"github.com/Syfaro/telegram-bot-api"
+	"http"
 	"io/ioutil"
 	"log"
 	"net/url"
