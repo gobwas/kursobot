@@ -78,8 +78,6 @@ func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Curre
 		return nil, err
 	}
 
-	fmt.Println("Response", string(contents))
-
 	var r Response
 	if err := json.Unmarshal(contents, &r); err != nil {
 		return nil, err
