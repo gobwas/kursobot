@@ -2,6 +2,7 @@ package main
 
 import (
 	//	"finance/yahoo"
+	"crypto/tls"
 	"flag"
 	"github.com/BurntSushi/toml"
 	"github.com/Syfaro/telegram-bot-api"
@@ -70,7 +71,13 @@ func main() {
 	}
 
 	bot.ListenForWebhook()
-	go http.ListenAndServeTLS(":443", config.SSL.Certificate, config.SSL.Key, nil)
+
+	go func() {
+		tlsConfig := &tls.Config{InsecureSkipVerify: true}
+		server := &http.Server{Addr: ":443", TLSConfig: tlsConfig}
+		server.ListenAndServeTLS(config.SSL.Certificate, config.SSL.Key)
+	}()
+	//	go http.ListenAndServeTLS(":443", config.SSL.Certificate, config.SSL.Key, nil)
 
 	for update := range bot.Updates {
 		log.Printf("%+v\n", update)
