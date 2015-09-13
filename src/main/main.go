@@ -60,7 +60,7 @@ func main() {
 	//		Host:   config.Host,
 	//		Path:   config.Token,
 	//	}
-	if _, err := bot.SetWebhook(tgbotapi.NewWebhookWithCert("https://kursobot.gobwas.com", "server.crt")); err != nil {
+	if _, err := bot.SetWebhook(tgbotapi.NewWebhookWithCert("https://kursobot.gobwas.com/"+config.Token, "server.crt")); err != nil {
 		log.Panic("Could not set webhook", err)
 		return
 	}
