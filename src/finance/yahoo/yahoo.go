@@ -5,7 +5,6 @@ import (
 	"finance"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 )
