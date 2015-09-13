@@ -18,7 +18,7 @@ type Config struct {
 }
 
 type Response struct {
-	Query []Result `json:"query"`
+	Query Result `json:"query"`
 }
 
 type Result struct {
@@ -81,5 +81,5 @@ func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Curre
 		return nil, err
 	}
 
-	return &finance.Rate{Rate: r.Query[0].Results.Rate[0].Rate}, nil
+	return &finance.Rate{Rate: r.Query.Results.Rate[0].Rate}, nil
 }
