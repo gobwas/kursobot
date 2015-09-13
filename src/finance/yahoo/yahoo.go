@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 type YahooFinanceService struct {
@@ -35,10 +36,11 @@ type ResultRate struct {
 type YahooRate struct {
 	Id   string `json:"id"`
 	Name string
-	Rate float64
+	Rate string
 	Date string
-	Ask  float64
-	Bid  float64
+	Time string
+	Ask  string
+	Bid  string
 }
 
 func New(config Config) (*YahooFinanceService, error) {
@@ -81,5 +83,5 @@ func (self *YahooFinanceService) GetRate(from finance.Currency, to finance.Curre
 		return nil, err
 	}
 
-	return &finance.Rate{Rate: r.Query.Results.Rate[0].Rate}, nil
+	return &finance.Rate{Rate: strconv.ParseFloat(r.Query.Results.Rate[0].Rate, 64)}, nil
 }
