@@ -1,0 +1,4 @@
+Scheme = "https"
+Host = "kursobot.gobwas.com"
+Token = "fff"
+Debug = true

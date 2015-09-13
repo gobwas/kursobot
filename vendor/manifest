@@ -1,0 +1,29 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/BurntSushi/toml",
+			"repository": "https://github.com/BurntSushi/toml",
+			"revision": "056c9bc7be7190eaa7715723883caffa5f8fa3e4",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/Syfaro/telegram-bot-api",
+			"repository": "https://github.com/Syfaro/telegram-bot-api",
+			"revision": "236ac39b3448e02c9181a878928b592f53fe7191",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/syfaro/telegram-bot-api",
+			"repository": "https://github.com/syfaro/telegram-bot-api",
+			"revision": "236ac39b3448e02c9181a878928b592f53fe7191",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/technoweenie/multipartstreamer",
+			"repository": "https://github.com/technoweenie/multipartstreamer",
+			"revision": "a90a01d73ae432e2611d178c18367fbaa13e0154",
+			"branch": "master"
+		}
+	]
+}

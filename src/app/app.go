@@ -1,8 +1,9 @@
 package app
+
 import (
-	"net/http"
 	"errors"
 	"fmt"
+	"net/http"
 )
 
 const (
@@ -17,23 +18,23 @@ type App struct {
 }
 
 func New() *App {
-	return &App{ handlers:make(map[string]map[string]http.Handler) }
+	return &App{handlers: make(map[string]map[string]http.Handler)}
 }
 
-func (self *App) Get(path string, handler interface{}) {
-	self.Use(GET, path, handler)
+func (self *App) Get(path string, handler interface{}) error {
+	return self.Use(GET, path, handler)
 }
 
-func (self *App) Post(path string, handler interface{}) {
-	self.Use(POST, path, handler)
+func (self *App) Post(path string, handler interface{}) error {
+	return self.Use(POST, path, handler)
 }
 
-func (self *App) Put(path string, handler interface{}) {
-	self.Use(PUT, path, handler)
+func (self *App) Put(path string, handler interface{}) error {
+	return self.Use(PUT, path, handler)
 }
 
-func (self *App) Delete(path string, handler interface{}) {
-	self.Use(DELETE, path, handler)
+func (self *App) Delete(path string, handler interface{}) error {
+	return self.Use(DELETE, path, handler)
 }
 
 func (self *App) Use(method string, path string, handler interface{}) error {
@@ -85,4 +86,3 @@ func (self *App) Listen(port int) {
 
 	http.ListenAndServe(portString, nil)
 }
-

@@ -1,22 +1,68 @@
 package main
 
 import (
-	"finance/yahoo"
-	"app"
-	"main/controller"
+	//	"finance/yahoo"
+	"flag"
+	"github.com/BurntSushi/toml"
+	"github.com/Syfaro/telegram-bot-api"
+	"io/ioutil"
+	"log"
+	"net/url"
 )
 
+type Config struct {
+	Scheme string
+	Host   string
+	Token  string
+	Debug  bool
+}
+
 func main() {
-	var financeService *yahoo.YahooFinanceService
-	financeService, err := yahoo.New(yahoo.Config{Url:"https://query.yahooapis.com/v1/public/yql"})
-	if err != nil {
-		panic(err)
+	//	var financeService *yahoo.YahooFinanceService
+	//	financeService, err := yahoo.New(yahoo.Config{Url: "https://query.yahooapis.com/v1/public/yql"})
+	//	if err != nil {
+	//		log.Panic(err)
+	//		return
+	//	}
+	configPath := flag.String("config", "", "Path to config file")
+	flag.Parse()
+
+	if *configPath == "" {
+		flag.Usage()
 		return
 	}
 
-	mainController := controller.New(financeService)
+	cfg, err := ioutil.ReadFile(*configPath)
+	if err != nil {
+		log.Panic(err)
+		return
+	}
 
-	app := app.New()
-	app.Get("/", mainController)
-	app.Listen(8080)
+	var config Config
+	if _, err := toml.Decode(string(cfg), &config); err != nil {
+		log.Panic(err)
+		return
+	}
+
+	bot, err := tgbotapi.NewBotAPI(config.Token)
+	if err != nil {
+		log.Panic("Could not initialize bot: ", err)
+		return
+	}
+	bot.Debug = config.Debug
+
+	webHookUrl := url.URL{
+		Scheme: config.Scheme,
+		Host:   config.Host,
+		Path:   config.Token,
+	}
+	if _, err := bot.SetWebhook(tgbotapi.WebhookConfig{URL: &webHookUrl}); err != nil {
+		log.Panic("Could not set webhook", err)
+		return
+	}
+	bot.ListenForWebhook()
+
+	for update := range bot.Updates {
+		log.Printf("%+v\n", update)
+	}
 }
