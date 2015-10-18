@@ -18,5 +18,5 @@ script: gb test all
 # build docker
 after_success:
  - docker build -t gobwas/kursobot .
- - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+ - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" -e="$DOCKER_EMAIL"
  - docker push gobwas/kursobot
