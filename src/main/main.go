@@ -57,7 +57,7 @@ func main() {
 
 	app.Use(telegram.Condition{matcher.Equal{"/help"}, telegram.HandlerFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I do not have help yet! =("))
-		ctrl.Next()
+		ctrl.Stop()
 	})})
 
 	app.Use(telegram.Condition{matcher.RegExp{regexp.MustCompile(`/(usd|eur)`)}, telegram.HandlerFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
@@ -69,7 +69,7 @@ func main() {
 			}
 
 			bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatFloat(rate.Rate, 'f', 2, 64)))
-			ctrl.Next()
+			ctrl.Stop()
 		} else {
 			ctrl.Throw(fmt.Errorf("Unexpected"))
 		}
