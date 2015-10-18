@@ -1,0 +1,21 @@
+sudo: false
+
+services:
+  - docker
+
+language: go
+
+go:
+  - 1.5
+
+before_install:
+ - go get github.com/constabulary/gb/...
+
+install: gb vendor restore
+
+script: gb test all
+
+after_success:
+ - docker build -t gobwas/kursobot .
+ - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+ - docker push gobwas/kursobot
