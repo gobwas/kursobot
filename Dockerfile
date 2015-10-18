@@ -9,11 +9,11 @@ ADD . /root/kursobot
 # (You may fetch or manage dependencies here,
 # either manually or with a tool like "godep".)
 RUN go get github.com/constabulary/gb/...
-RUN cd /root/outyet && gb vendor restore
-RUN cd /root/outyet && gb build all
+RUN cd /root/kursobot && gb vendor restore
+RUN cd /root/kursobot && gb build all
 
-# Run the outyet command by default when the container starts.
-ENTRYPOINT /root/outyet/bin/kursobot -config=/usr/local/etc/kursobot.conf
+# Run the kursobot command by default when the container starts.
+ENTRYPOINT /root/kursobot/bin/kursobot -config=/usr/local/etc/kursobot.conf
 
 # Document that the service listens on port 8080.
 EXPOSE 8443
