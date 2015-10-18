@@ -14,7 +14,7 @@ RUN cd /root/kursobot && gb build all
 RUN cd /root/kursobot && ls -la
 
 # Run the kursobot command by default when the container starts.
-ENTRYPOINT /root/kursobot/bin/kursobot -config=/usr/local/etc/kursobot.conf
+ENTRYPOINT /root/kursobot/bin/main -config=/usr/local/etc/kursobot.conf
 
 # Document that the service listens on port 8080.
 EXPOSE 8443
