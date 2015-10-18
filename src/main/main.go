@@ -4,13 +4,16 @@ import (
 	"finance"
 	"finance/yahoo"
 	"flag"
+	"fmt"
 	"github.com/BurntSushi/toml"
 	"github.com/Syfaro/telegram-bot-api"
+	"github.com/gobwas/telegram"
+	"github.com/gobwas/telegram/matcher"
 	"io/ioutil"
 	"log"
-	"net/http"
-	"net/url"
+	"regexp"
 	"strconv"
+	"strings"
 )
 
 type SSL struct {
@@ -19,21 +22,10 @@ type SSL struct {
 }
 
 type Config struct {
-	Scheme string
-	Host   string
-	Token  string
-	Debug  bool
-	SSL    SSL
+	Telegram telegram.Config
 }
 
 func main() {
-	var financeService *yahoo.YahooFinanceService
-	financeService, err := yahoo.New(yahoo.Config{Url: "https://query.yahooapis.com/v1/public/yql"})
-	if err != nil {
-		log.Panic(err)
-		return
-	}
-
 	configPath := flag.String("config", "", "Path to config file")
 	flag.Parse()
 
@@ -45,59 +37,53 @@ func main() {
 	cfg, err := ioutil.ReadFile(*configPath)
 	if err != nil {
 		log.Panic(err)
-		return
 	}
 
 	var config Config
 	if _, err := toml.Decode(string(cfg), &config); err != nil {
 		log.Panic(err)
-		return
 	}
 
-	bot, err := tgbotapi.NewBotAPI(config.Token)
+	var financeService *yahoo.YahooFinanceService
+	financeService, err = yahoo.New(yahoo.Config{Url: "https://query.yahooapis.com/v1/public/yql"})
 	if err != nil {
-		log.Panic("Could not initialize bot: ", err)
-		return
+		log.Panic(err)
 	}
-	bot.Debug = config.Debug
-	log.Println("Initialized bot")
 
-	webHookUrl := url.URL{
-		Scheme: config.Scheme,
-		Host:   config.Host,
-		Path:   config.Token,
+	app, err := telegram.New(config.Telegram)
+	if err != nil {
+		log.Panic("Could not init app: ", err)
 	}
-	if _, err := bot.SetWebhook(tgbotapi.WebhookConfig{URL: &webHookUrl, Certificate: config.SSL.Certificate}); err != nil {
-		log.Panic("Could not set webhook", err)
-		return
-	}
-	bot.ListenForWebhook()
-	go http.ListenAndServeTLS(":443", config.SSL.Certificate, config.SSL.Key, nil)
 
-	for update := range bot.Updates {
-		if config.Debug {
-			log.Printf("Got an update: %+v\n", update)
-		}
+	app.Use(telegram.Condition{matcher.Equal{"/help"}, telegram.HandlerFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+		bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I do not have help yet! =("))
+		ctrl.Next()
+	})})
 
-		switch update.Message.Text {
-		case "/help":
-			bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I do not have help yet! =("))
-		case "/usd":
-			rate, err := financeService.GetRate(finance.USD, finance.RUB)
+	app.Use(telegram.Condition{matcher.RegExp{regexp.MustCompile(`/(usd|eur)`)}, telegram.HandlerFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+		if match, ok := ctrl.Context().Value(telegram.MATCH).(matcher.Match); ok {
+			rate, err := financeService.GetRate(finance.Currency(strings.ToUpper(match.Slugs[0].Value)), finance.RUB)
 			if err != nil {
-				log.Println("Got error:", err)
-				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I've got error =("))
-			} else {
-				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatFloat(rate.Rate, 'f', 2, 64)))
+				ctrl.Throw(err)
+				return
 			}
-		case "/eur":
-			rate, err := financeService.GetRate(finance.EUR, finance.RUB)
-			if err != nil {
-				log.Println("Got error:", err)
-				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I've got error =("))
-			} else {
-				bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatFloat(rate.Rate, 'f', 2, 64)))
-			}
+
+			bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, strconv.FormatFloat(rate.Rate, 'f', 2, 64)))
+			ctrl.Next()
+		} else {
+			ctrl.Throw(fmt.Errorf("Unexpected"))
 		}
-	}
+	})})
+
+	app.UseFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
+		bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I do not know this route yet"))
+		ctrl.Stop()
+	})
+
+	app.UseErrFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update, err error) {
+		bot.SendMessage(tgbotapi.NewMessage(update.Message.Chat.ID, "Sorry, I've got error =("))
+		ctrl.Stop()
+	})
+
+	log.Fatal(app.Listen())
 }

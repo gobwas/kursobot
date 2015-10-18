@@ -10,13 +10,19 @@
 		{
 			"importpath": "github.com/Syfaro/telegram-bot-api",
 			"repository": "https://github.com/Syfaro/telegram-bot-api",
-			"revision": "236ac39b3448e02c9181a878928b592f53fe7191",
+			"revision": "e1a0a819c0036d628c5ef449135c7963006f7cbc",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gobwas/telegram",
+			"repository": "https://github.com/gobwas/telegram",
+			"revision": "1af403969c9ae3a9a35eb51c8e84997e7b7546cd",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/syfaro/telegram-bot-api",
 			"repository": "https://github.com/syfaro/telegram-bot-api",
-			"revision": "236ac39b3448e02c9181a878928b592f53fe7191",
+			"revision": "e1a0a819c0036d628c5ef449135c7963006f7cbc",
 			"branch": "master"
 		},
 		{
@@ -24,6 +30,13 @@
 			"repository": "https://github.com/technoweenie/multipartstreamer",
 			"revision": "a90a01d73ae432e2611d178c18367fbaa13e0154",
 			"branch": "master"
+		},
+		{
+			"importpath": "golang.org/x/net/context",
+			"repository": "https://go.googlesource.com/net",
+			"revision": "cd8c2701a5e10f044db915e65eac68f738399d22",
+			"branch": "master",
+			"path": "/context"
 		}
 	]
 }
