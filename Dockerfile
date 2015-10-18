@@ -11,6 +11,7 @@ ADD . /root/kursobot
 RUN go get github.com/constabulary/gb/...
 RUN cd /root/kursobot && gb vendor restore
 RUN cd /root/kursobot && gb build all
+RUN cd /root/kursobot && ls -la
 
 # Run the kursobot command by default when the container starts.
 ENTRYPOINT /root/kursobot/bin/kursobot -config=/usr/local/etc/kursobot.conf
