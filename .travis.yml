@@ -15,6 +15,7 @@ install: gb vendor restore
 
 script: gb test all
 
+# build docker
 after_success:
  - docker build -t gobwas/kursobot .
  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
