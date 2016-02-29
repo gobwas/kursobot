@@ -1,0 +1,15 @@
+Canceler = "15s"
+
+[Telegram]
+Token = "<token>"
+Debug = true
+
+[Telegram.Polling]
+Timeout = 5
+
+[Yahoo]
+Url = "https://query.yahooapis.com/v1/public/yql"
+MaxIdleConnsPerHost = 4
+Timeout = 30
+KeepAlive = 30
+TLSHandshakeTimeout = 10

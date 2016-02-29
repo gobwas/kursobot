@@ -4,25 +4,43 @@
 		{
 			"importpath": "github.com/BurntSushi/toml",
 			"repository": "https://github.com/BurntSushi/toml",
-			"revision": "056c9bc7be7190eaa7715723883caffa5f8fa3e4",
+			"revision": "a4eecd407cf4129fc902ece859a0114e4cf1a7f4",
 			"branch": "master"
 		},
 		{
-			"importpath": "github.com/Syfaro/telegram-bot-api",
-			"repository": "https://github.com/Syfaro/telegram-bot-api",
-			"revision": "e1a0a819c0036d628c5ef449135c7963006f7cbc",
+			"importpath": "github.com/constabulary/gb",
+			"repository": "https://github.com/constabulary/gb",
+			"revision": "c00a5b481b44fb4af3fa8a16e6c41ca877612d8f",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/go-telegram-bot-api/telegram-bot-api",
+			"repository": "https://github.com/go-telegram-bot-api/telegram-bot-api",
+			"revision": "67abf47ae87ad47fc22281d35c4da8df00522697",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gobwas/glob",
+			"repository": "https://github.com/gobwas/glob",
+			"revision": "a3f5513f64fe4307f2c71ea06b25f6154eb9dc5f",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gobwas/include",
+			"repository": "https://github.com/gobwas/include",
+			"revision": "ca85b11897597c8f82af1859df51081fec188607",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/gobwas/telegram",
 			"repository": "https://github.com/gobwas/telegram",
-			"revision": "bfbd2b9fee79d533c1388c781e1806e330d829d9",
+			"revision": "4d4c0beb91270e42805f16718fcb468c70371234",
 			"branch": "master"
 		},
 		{
-			"importpath": "github.com/syfaro/telegram-bot-api",
-			"repository": "https://github.com/syfaro/telegram-bot-api",
-			"revision": "e1a0a819c0036d628c5ef449135c7963006f7cbc",
+			"importpath": "github.com/mailru/easyjson",
+			"repository": "https://github.com/mailru/easyjson",
+			"revision": "e7141db2c56e7725d7f4eeb30f8146fffd35136a",
 			"branch": "master"
 		},
 		{
@@ -34,7 +52,7 @@
 		{
 			"importpath": "golang.org/x/net/context",
 			"repository": "https://go.googlesource.com/net",
-			"revision": "cd8c2701a5e10f044db915e65eac68f738399d22",
+			"revision": "6acef71eb69611914f7a30939ea9f6e194c78172",
 			"branch": "master",
 			"path": "/context"
 		}

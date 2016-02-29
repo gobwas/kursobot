@@ -4,4 +4,4 @@ kursobot
 pkg
 bin
 vendor/src
-config.toml
+etc/config.toml

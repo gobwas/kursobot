@@ -16,7 +16,3 @@ type Rate struct {
 	Ask  float64
 	Bid  float64
 }
-
-type FinanceService interface {
-	GetRate(from Currency, to Currency) (*Rate, error)
-}
