@@ -9,7 +9,6 @@ gb:
 	GOPATH=$(PWD)/vendor go get github.com/constabulary/gb/...
 
 vendor: gb bin/gb
-	PATH=$(BIN_PATH) gb help
 	PATH=$(BIN_PATH) gb vendor restore
 
 bin/gb:
