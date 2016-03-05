@@ -21,6 +21,6 @@ bin/easyjson: bin/gb
 generate: bin/gb bin/include bin/easyjson
 	PATH=$(BIN_PATH) gb generate
 
-.PHONY: bin/gb bin/include bin/easyjson
+.PHONY: all vendor bin/gb bin/include bin/easyjson
 
 
