@@ -5,6 +5,12 @@ BIN_PATH=$(PWD)/bin:$(PATH)
 all: generate bin/gb
 	PATH=$(BIN_PATH) gb build app
 
+gb:
+    GOPATH=$(PWD)/vendor go get github.com/constabulary/gb
+
+vendor: gb bin/gb
+    PATH=$(BIN_PATH) gb vendor restore
+
 bin/gb:
 	GOPATH=$(GOPATH) go build -o=./bin/gb ./vendor/src/github.com/constabulary/gb/cmd/gb
 
