@@ -1,0 +1,23 @@
+[Telegram]
+Token = "xxx"
+Debug = true
+
+[Telegram.WebHook.URL]
+Scheme = "https"
+Host = "kursobot.dokku.gobwas.com"
+Path = "xxx"
+
+[Telegram.WebHook.Listen]
+TLS = false
+Port = 8443
+
+[Telegram.WebHook.SSL]
+Cert = "cert"
+Key = "key"
+
+[Yahoo]
+Url = "https://query.yahooapis.com/v1/public/yql"
+MaxIdleConnsPerHost = 4
+Timeout = 30
+KeepAlive = 30
+TLSHandshakeTimeout = 10
