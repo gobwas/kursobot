@@ -1,12 +1,12 @@
 PKG=github.com/mailru/easyjson
 GOPATH=$(PWD):$(PWD)/vendor
-BIN_PATH=$(PWD)/bin:$(PATH)
+BIN_PATH=$(PWD)/bin:$(PWD)/vendor/bin:$(PATH)
 
 all: generate bin/gb
 	PATH=$(BIN_PATH) gb build app
 
 gb:
-	GOPATH=$(PWD) go get github.com/constabulary/gb/...
+	GOPATH=$(PWD)/vendor go get github.com/constabulary/gb/...
 
 vendor: gb bin/gb
 	PATH=$(BIN_PATH) gb vendor restore
