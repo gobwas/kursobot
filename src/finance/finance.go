@@ -13,6 +13,7 @@ type Rate struct {
 	Name string
 	Rate float64
 	Date string
+	Time string
 	Ask  float64
 	Bid  float64
 }

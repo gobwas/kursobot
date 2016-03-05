@@ -4,19 +4,13 @@
 		{
 			"importpath": "github.com/BurntSushi/toml",
 			"repository": "https://github.com/BurntSushi/toml",
-			"revision": "a4eecd407cf4129fc902ece859a0114e4cf1a7f4",
+			"revision": "75869ce70f3cd0f6d1473c58f4adac5941f1055a",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/constabulary/gb",
 			"repository": "https://github.com/constabulary/gb",
 			"revision": "c00a5b481b44fb4af3fa8a16e6c41ca877612d8f",
-			"branch": "master"
-		},
-		{
-			"importpath": "github.com/go-telegram-bot-api/telegram-bot-api",
-			"repository": "https://github.com/go-telegram-bot-api/telegram-bot-api",
-			"revision": "67abf47ae87ad47fc22281d35c4da8df00522697",
 			"branch": "master"
 		},
 		{
@@ -34,13 +28,19 @@
 		{
 			"importpath": "github.com/gobwas/telegram",
 			"repository": "https://github.com/gobwas/telegram",
-			"revision": "4d4c0beb91270e42805f16718fcb468c70371234",
+			"revision": "e66379764fa2907620399acebcf9c2477eb59b5b",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/kyokomi/emoji",
+			"repository": "https://github.com/kyokomi/emoji",
+			"revision": "1ee4529aea609e7364bf629527f390d9d1b88dfb",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/mailru/easyjson",
 			"repository": "https://github.com/mailru/easyjson",
-			"revision": "e7141db2c56e7725d7f4eeb30f8146fffd35136a",
+			"revision": "4534d5e7c54a1c55720c891862546f1230642420",
 			"branch": "master"
 		},
 		{
@@ -52,9 +52,15 @@
 		{
 			"importpath": "golang.org/x/net/context",
 			"repository": "https://go.googlesource.com/net",
-			"revision": "6acef71eb69611914f7a30939ea9f6e194c78172",
+			"revision": "08f168e593b5aab61849054b77981de812666697",
 			"branch": "master",
 			"path": "/context"
+		},
+		{
+			"importpath": "gopkg.in/telegram-bot-api.v2",
+			"repository": "https://gopkg.in/telegram-bot-api.v2",
+			"revision": "6faae88cbd1dad3d6c06c2a290f50fa38894f90e",
+			"branch": "master"
 		}
 	]
 }

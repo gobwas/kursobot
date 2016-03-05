@@ -116,7 +116,7 @@ func easyjson_decode_finance_provider_yahoo_ResultRate(in *jlexer.Lexer, out *Re
 		}
 		switch key {
 		case "rate":
-			easyjson_decode_finance_provider_yahoo_YahooRate(in, &out.Rate)
+			(out.Rate).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -133,7 +133,7 @@ func easyjson_encode_finance_provider_yahoo_ResultRate(out *jwriter.Writer, in *
 	}
 	first = false
 	out.RawString("\"rate\":")
-	easyjson_encode_finance_provider_yahoo_YahooRate(out, &in.Rate)
+	(in.Rate).MarshalEasyJSON(out)
 	out.RawByte('}')
 }
 func (v *ResultRate) MarshalJSON() ([]byte, error) {
@@ -170,7 +170,7 @@ func easyjson_decode_finance_provider_yahoo_Result(in *jlexer.Lexer, out *Result
 		case "lang":
 			out.Lang = in.String()
 		case "results":
-			easyjson_decode_finance_provider_yahoo_ResultRate(in, &out.Results)
+			(out.Results).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -205,7 +205,7 @@ func easyjson_encode_finance_provider_yahoo_Result(out *jwriter.Writer, in *Resu
 	}
 	first = false
 	out.RawString("\"results\":")
-	easyjson_encode_finance_provider_yahoo_ResultRate(out, &in.Results)
+	(in.Results).MarshalEasyJSON(out)
 	out.RawByte('}')
 }
 func (v *Result) MarshalJSON() ([]byte, error) {
@@ -236,7 +236,7 @@ func easyjson_decode_finance_provider_yahoo_Response(in *jlexer.Lexer, out *Resp
 		}
 		switch key {
 		case "query":
-			easyjson_decode_finance_provider_yahoo_Result(in, &out.Query)
+			(out.Query).UnmarshalEasyJSON(in)
 		default:
 			in.SkipRecursive()
 		}
@@ -253,7 +253,7 @@ func easyjson_encode_finance_provider_yahoo_Response(out *jwriter.Writer, in *Re
 	}
 	first = false
 	out.RawString("\"query\":")
-	easyjson_encode_finance_provider_yahoo_Result(out, &in.Query)
+	(in.Query).MarshalEasyJSON(out)
 	out.RawByte('}')
 }
 func (v *Response) MarshalJSON() ([]byte, error) {

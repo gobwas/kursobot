@@ -1,20 +1,10 @@
-# Start from a Debian image with the latest version of Go installed
-# and a workspace (GOPATH) configured at /go.
 FROM golang
-
-# Copy the local package files to the container's workspace.
-ADD . /root/kursobot
-
-# Build the outyet command inside the container.
-# (You may fetch or manage dependencies here,
-# either manually or with a tool like "godep".)
-RUN go get github.com/constabulary/gb/...
-RUN cd /root/kursobot && gb vendor restore
-RUN cd /root/kursobot && gb build all
-RUN cd /root/kursobot && ls -la
-
-# Run the kursobot command by default when the container starts.
-ENTRYPOINT /root/kursobot/bin/main -config=/usr/local/etc/kursobot.conf
-
-# Document that the service listens on port 8080.
+ADD . /src/kursobot
+RUN apt-get update && apt-get install -y supervisor
+RUN make
+COPY /src/kursobot/bin/app /usr/local/kursobot/bin/app
+COPY /src/kursobot/etc/config.conf /usr/local/kursobot/kursobot.conf
+COPY /src/kursobot/etc/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+#ENTRYPOINT /root/kursobot/bin/app -config=/usr/local/kursobot/kursobot.conf
 EXPOSE 8443
+CMD ["/usr/bin/supervisord"]

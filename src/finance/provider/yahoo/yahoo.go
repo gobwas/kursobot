@@ -80,10 +80,14 @@ func (self *YahooFinanceService) GetRate(ctx context.Context, from finance.Curre
 		return nil, err
 	}
 
-	rate, err := strconv.ParseFloat(r.Query.Results.Rate.Rate, 64)
+	yahooRate := r.Query.Results.Rate
+	rate, err := strconv.ParseFloat(yahooRate.Rate, 64)
 	if err != nil {
 		return nil, err
 	}
 
-	return &finance.Rate{Rate: rate}, nil
+	return &finance.Rate{
+		Rate: rate,
+		Name: yahooRate.Name,
+	}, nil
 }

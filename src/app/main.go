@@ -6,12 +6,13 @@ import (
 	"flag"
 	"fmt"
 	"github.com/BurntSushi/toml"
-	"github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/gobwas/telegram"
 	"github.com/gobwas/telegram/handler/canceler"
 	"github.com/gobwas/telegram/handler/condition"
 	"github.com/gobwas/telegram/handler/condition/matcher"
 	"github.com/gobwas/telegram/handler/slugger"
+	"github.com/kyokomi/emoji"
+	"gopkg.in/telegram-bot-api.v2"
 	helpHandler "help/handler/telegram"
 	"io/ioutil"
 	"log"
@@ -69,37 +70,39 @@ func main() {
 		&canceler.Canceler{config.Canceler.Duration},
 
 		telegram.HandlerFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-			log.Println("got message:", fmt.Sprintf(update.Message.Text))
+			log.Printf(
+				"[%d][%s] incoming message: text:%q; query:%q",
+				update.UpdateID, update.Message.From.String(),
+				update.Message.Text, update.InlineQuery.Query,
+			)
 			ctrl.Next()
 		}),
 	)
 
 	// logic
 	app.UseOn("/help", helpHandler.New())
+
+	fh := financeHandler.New(f)
 	app.Use(condition.Condition{
-		matcher.RegExp{regexp.MustCompile(`^\/([a-z]{3}$|rate.*$)`)},
-		financeHandler.New(f),
+		matcher.RegExp{
+			Source:  matcher.SourceText,
+			Pattern: regexp.MustCompile(`^\/([a-z]{3}$|rate.*$)`),
+		},
+		fh,
 	})
-	// todo use gopkg.in/telegram-bot-api.v2
-	//	app.Use(telegram.HandlerFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-	//		log.Println("INLINE", update.InlineQuery.Query)
-	//		if update.InlineQuery.Query == "usd" {
-	//			bot.AnswerInlineQuery(tgbotapi.InlineConfig{
-	//				InlineQueryID: update.InlineQuery.ID,
-	//				Results: []tgbotapi.InlineQueryResult{
-	//					tgbotapi.InlineQueryResult{
-	//						Type: tgboty,
-	//						ID:   "ddd",
-	//					},
-	//				},
-	//			})
-	//		}
-	//		ctrl.Next()
-	//	}))
+	app.Use(condition.Condition{
+		matcher.RegExp{
+			Source:  matcher.SourceQuery,
+			Pattern: regexp.MustCompile(`^([a-z]{3}|[a-z]{3} [a-z]{3})`),
+		},
+		fh,
+	})
 
 	// error handler
 	app.UseErrFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update, err error) {
-		bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, fmt.Sprintf("sad, but bot got error: %s", err)))
+		if update.Message.Text != "" {
+			bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, emoji.Sprintf(":space_invader:error: %s", err)))
+		}
 		log.Println("got error", err)
 		ctrl.Stop()
 	})
