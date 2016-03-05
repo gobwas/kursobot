@@ -22,8 +22,8 @@ generate: bin/gb bin/include bin/easyjson
 	PATH=$(BIN_PATH) gb generate
 
 install:
-    install -d /usr/local/kursobot
-    install -d /usr/local/kursobot/bin
+	install -d /usr/local/kursobot
+	install -d /usr/local/kursobot/bin
 	install -m0755 ./bin/app /usr/local/kursobot/bin/app
 
 .PHONY: all install vendor bin/gb bin/include bin/easyjson
