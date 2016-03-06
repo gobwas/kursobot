@@ -11,6 +11,6 @@ EXPOSE 8443
 RUN mkdir /var/log/kursobot/supervisord
 
 RUN addgroup kursobot
-RUN adduser kursobot kursobot
+RUN useradd -G kursobot kursobot
 
 ENTRYPOINT /usr/bin/supervisord -c /usr/local/kursobot/kursobotd.ini
