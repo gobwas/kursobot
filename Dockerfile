@@ -9,6 +9,8 @@ RUN cd /src/kursobot && make install
 EXPOSE 8443
 
 RUN mkdir /var/log/kursobot/supervisord
-RUN useradd -G kursobot kursobot
+
+RUN addgroup kursobot
+RUN adduser kursobot kursobot
 
 ENTRYPOINT /usr/bin/supervisord -c /usr/local/kursobot/kursobotd.ini
