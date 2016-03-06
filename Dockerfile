@@ -14,3 +14,5 @@ RUN useradd -g kursobot kursobot
 
 #ENTRYPOINT /usr/bin/supervisord -c /usr/local/kursobot/kursobotd.ini
 CMD ["/usr/bin/supervisord", "-c /usr/local/kursobot/kursobotd.ini"]
+CMD ["echo", "OK"]
+CMD ["cat", "/var/log/kursobot/supervisord/supervisord.log"]
