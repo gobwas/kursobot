@@ -9,6 +9,7 @@ Path = "xxx"
 
 [Telegram.WebHook.Listen]
 Port = 8443
+Cert = "cert for webhook"
 
 [Telegram.WebHook.Listen.TLS]
 Cert = "cert"
