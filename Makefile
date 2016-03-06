@@ -24,6 +24,7 @@ generate: bin/gb bin/include bin/easyjson
 install:
 	install -d /usr/local/kursobot
 	install -d /usr/local/kursobot/bin
+	install -d /var/log/kursobot
 	install -m0755 ./bin/app /usr/local/kursobot/bin/app
 	install -m0644 ./etc/example.toml /usr/local/kursobot/kursobot.toml.example
 	install -m0644 ./etc/supervisord.conf /usr/local/kursobot/kursobotd.conf.example
