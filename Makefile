@@ -27,7 +27,7 @@ install:
 	install -d /var/log/kursobot
 	install -m0755 ./bin/app /usr/local/kursobot/bin/app
 	install -m0644 ./etc/example.toml /usr/local/kursobot/kursobot.toml.example
-	install -m0644 ./etc/supervisord.conf /usr/local/kursobot/kursobotd.conf.example
+	install -m0644 ./etc/supervisord.ini /usr/local/kursobot/kursobotd.ini.example
 	ls -la /usr/local/kursobot
 
 .PHONY: all install vendor bin/gb bin/include bin/easyjson

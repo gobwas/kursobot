@@ -6,5 +6,5 @@ RUN cd /src/kursobot && make
 RUN cd /src/kursobot && make install
 #ENTRYPOINT /root/kursobot/bin/app -config=/usr/local/kursobot/kursobot.conf
 EXPOSE 8443
-ENTRYPOINT /usr/bin/supervisord -c /usr/local/kursobot/kursobotd.conf
-#CMD ["/usr/bin/supervisord", "-c /usr/local/kursobot/kursobotd.conf"]
+ENTRYPOINT /usr/bin/supervisord -c /usr/local/kursobot/kursobotd.ini
+#CMD ["/usr/bin/supervisord", "-c /usr/local/kursobot/kursobotd.ini"]
