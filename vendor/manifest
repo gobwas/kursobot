@@ -28,7 +28,7 @@
 		{
 			"importpath": "github.com/gobwas/telegram",
 			"repository": "https://github.com/gobwas/telegram",
-			"revision": "e66379764fa2907620399acebcf9c2477eb59b5b",
+			"revision": "87a01c274714a9e73a8c9ddc76a1ab32aabb91d8",
 			"branch": "master"
 		},
 		{

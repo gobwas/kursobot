@@ -8,10 +8,9 @@ Host = "kursobot.dokku.gobwas.com"
 Path = "xxx"
 
 [Telegram.WebHook.Listen]
-TLS = false
 Port = 8443
 
-[Telegram.WebHook.SSL]
+[Telegram.WebHook.Listen.TLS]
 Cert = "cert"
 Key = "key"
 
