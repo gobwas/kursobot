@@ -16,6 +16,7 @@ import (
 	helpHandler "help/handler/telegram"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"regexp"
 )
 
@@ -111,6 +112,10 @@ func main() {
 		log.Println("message processing complete")
 		ctrl.Next()
 	}))
+
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("OK"))
+	})
 
 	// start listen
 	log.Fatal(app.Listen())
