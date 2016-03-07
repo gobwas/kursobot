@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y supervisor
 
 RUN addgroup kursobot
 RUN useradd -g kursobot kursobot
-RUN mkdir /var/log/kursobot/supervisord
+#RUN mkdir /var/log/kursobot/supervisord
 
 #ENTRYPOINT /usr/bin/supervisord -c /mnt/kursobot/config/kursobotd.ini
 CMD ["cp", "/mnt/kursobot/tls/server.cert", "/tmp/server.crt"]
