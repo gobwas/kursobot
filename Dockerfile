@@ -1,7 +1,7 @@
 FROM golang
 
 ADD . /src/kursobot
-ADD ./etc/CHECKS /CHECKS
+ADD ./etc/CHECKS /root/CHECKS
 
 RUN apt-get update && apt-get install -y supervisor
 RUN cd /src/kursobot && make vendor
