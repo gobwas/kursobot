@@ -2,7 +2,7 @@ FROM golang
 
 ADD . /src/kursobot
 ADD ./etc/CHECKS /app/CHECKS
-ADD $TLS_CERT /app/server.crt
+COPY $TLS_CERT /app/server.crt
 
 RUN apt-get update && apt-get install -y supervisor
 RUN cd /src/kursobot && make vendor
