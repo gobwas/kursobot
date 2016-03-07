@@ -14,5 +14,7 @@ RUN useradd -g kursobot kursobot
 
 #ENTRYPOINT /usr/bin/supervisord -c /mnt/kursobot/config/kursobotd.ini
 CMD ["/usr/bin/supervisord", "-c", "/mnt/kursobot/config/kursobotd.ini"]
+CMD ["ls", "-la", "/mnt/kursobot/config"]
+CMD ["ls", "-la", "/mnt/kursobot/log"]
 
 EXPOSE 8443
