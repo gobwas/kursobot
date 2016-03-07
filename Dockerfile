@@ -10,8 +10,6 @@ RUN cd /src/kursobot && make install
 
 RUN addgroup kursobot
 RUN useradd -g kursobot kursobot
-RUN chown kursobot:kursobot /app/server.crt
-
 RUN mkdir /var/log/kursobot/supervisord
 
 #ENTRYPOINT /usr/bin/supervisord -c /mnt/kursobot/config/kursobotd.ini
