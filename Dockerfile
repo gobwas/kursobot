@@ -1,5 +1,5 @@
-RUN cp /mnt/kursobot/tls/server.crt /app/server.crt
 FROM golang
+RUN cp /mnt/kursobot/tls/server.crt /app/server.crt
 
 ADD . /src/kursobot
 COPY ./etc/CHECKS /app/CHECKS
