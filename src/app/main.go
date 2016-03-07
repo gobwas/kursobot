@@ -117,6 +117,8 @@ func main() {
 		w.Write([]byte("OK"))
 	})
 
+	log.Println("about to start app...")
+
 	// start listen
 	log.Fatal(app.Listen())
 }
