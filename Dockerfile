@@ -13,6 +13,6 @@ RUN addgroup kursobot
 RUN useradd -g kursobot kursobot
 
 #ENTRYPOINT /usr/bin/supervisord -c /usr/local/kursobot/kursobotd.ini
-CMD ["/usr/bin/supervisord", "-c" "/usr/local/kursobot/kursobotd.ini"]
+CMD ["/usr/bin/supervisord", "-c", "/usr/local/kursobot/kursobotd.ini"]
 
 EXPOSE 8443
