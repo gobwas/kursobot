@@ -114,7 +114,7 @@ func main() {
 	}))
 
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("OK"))
+		w.Write([]byte("KURSOBOT_OK"))
 	})
 
 	log.Println("about to start app...")
