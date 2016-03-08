@@ -11,11 +11,13 @@ RUN cd /src/kursobot && make install
 
 RUN addgroup kursobot
 RUN useradd -g kursobot kursobot
-#RUN mkdir -p /var/log/kursobot/supervisord
+
+USER kursobot
+VOLUME /mnt/kursobot/tls
+VOLUME /mnt/kursobot/log
+VOLUME /mnt/kursobot/config
 
 #ENTRYPOINT /usr/bin/supervisord -c /mnt/kursobot/config/kursobotd.ini
-CMD ["cp", "/mnt/kursobot/tls/server.cert", "/usr/local/kursobot/server.crt"]
-CMD ["chown", "kursobot:kursobot", "/usr/local/kursobot/server.crt"]
 CMD ["/usr/bin/supervisord", "-c", "/mnt/kursobot/config/kursobotd.ini"]
 
 EXPOSE 8443
