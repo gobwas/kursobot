@@ -1,10 +1,9 @@
-Kursobot
-========
+*Kursobot*
 
 Kursobot helps you to get actual currency rate.
 You could use it both in inline and command modes.
 
-### Inline mode
+*Inline mode*
 
 Feel free to use something like this:
 
@@ -19,7 +18,7 @@ Or
 @kursobot usd hrk
 ```
 
-### Command mode
+*Command mode*
 
 Just add @KursoBot in your group chat, and type him something like this:
 
