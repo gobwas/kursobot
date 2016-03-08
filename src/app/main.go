@@ -127,7 +127,7 @@ func main() {
 	})
 
 	log.Println("about to start app...")
-	app.Bot().Send(tgbotapi.NewMessage(config.NoticeChatID, emoji.Sprintf("hey man, I have been restarted! :sunglasses:")))
+	app.Bot().Send(tgbotapi.NewMessage(config.NoticeChatID, emoji.Sprintf("Hey man, I have been restarted! :fireworks::sunglasses:")))
 
 	// start listen
 	log.Fatal(app.Listen())

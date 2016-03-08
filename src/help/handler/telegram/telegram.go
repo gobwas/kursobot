@@ -15,7 +15,7 @@ func New() *Handler {
 
 func (h *Handler) Serve(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, help.HelpContents)
-	msg.ParseMode = "Markdown"
+	msg.ParseMode = telegram.ParseModeMarkdown
 	bot.Send(msg)
 	ctrl.Next()
 }
