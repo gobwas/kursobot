@@ -18,6 +18,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"time"
 )
 
 type SSL struct {
@@ -26,9 +27,10 @@ type SSL struct {
 }
 
 type Config struct {
-	Telegram telegram.Config
-	Yahoo    yahoo.Config
-	Canceler duration
+	Telegram     telegram.Config
+	Yahoo        yahoo.Config
+	Canceler     duration
+	NoticeChatID int
 }
 
 func main() {
@@ -50,8 +52,6 @@ func main() {
 		log.Panic(err)
 	}
 
-	log.Println("config:", fmt.Sprintf("%#v", config))
-
 	// initialize yahoo finance
 	var f *yahoo.YahooFinanceService
 	f, err = yahoo.New(config.Yahoo)
@@ -71,11 +71,12 @@ func main() {
 		&canceler.Canceler{config.Canceler.Duration},
 
 		telegram.HandlerFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-			log.Printf(
-				"[%d][%s] incoming message: text:%q; query:%q",
-				update.UpdateID, update.Message.From.String(),
+			ctrl.Log().Println(fmt.Sprintf(
+				"incoming message: text:%q; query:%q",
 				update.Message.Text, update.InlineQuery.Query,
-			)
+			))
+
+			ctrl.NextWithValue("start", time.Now())
 			ctrl.Next()
 		}),
 	)
@@ -104,12 +105,20 @@ func main() {
 		if update.Message.Text != "" {
 			bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, emoji.Sprintf(":space_invader:error: %s", err)))
 		}
-		log.Println("got error", err)
+		ctrl.Log().Println("got error", err)
 		ctrl.Stop()
 	})
 
 	app.Use(telegram.HandlerFunc(func(ctrl *telegram.Control, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-		log.Println("message processing complete")
+		var dur float64
+		if start, ok := ctrl.Context().Value("start").(time.Time); ok {
+			dur = time.Since(start).Seconds() * 1000
+		} else {
+			dur = -1
+		}
+		ctrl.Log().Println(fmt.Sprintf(
+			"message processing complete in %.2fmsec", dur,
+		))
 		ctrl.Next()
 	}))
 
@@ -118,6 +127,7 @@ func main() {
 	})
 
 	log.Println("about to start app...")
+	app.Bot().Send(tgbotapi.NewMessage(config.NoticeChatID, emoji.Sprintf("hey man, I have been restarted! :sunglasses:")))
 
 	// start listen
 	log.Fatal(app.Listen())
