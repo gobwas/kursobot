@@ -1,9 +1,5 @@
 FROM golang
 
-RUN addgroup kursobot
-RUN useradd -g kursobot kursobot
-USER kursobot
-
 ADD . /src/kursobot
 ADD ./etc/CHECKS /app/CHECKS
 
@@ -15,6 +11,10 @@ RUN cd /src/kursobot && make install
 VOLUME /mnt/kursobot/tls
 VOLUME /mnt/kursobot/log
 VOLUME /mnt/kursobot/config
+
+RUN addgroup kursobot
+RUN useradd -g kursobot kursobot
+USER kursobot
 
 #ENTRYPOINT /usr/bin/supervisord -c /mnt/kursobot/config/kursobotd.ini
 CMD ["/usr/bin/supervisord", "-c", "/mnt/kursobot/config/kursobotd.ini"]
