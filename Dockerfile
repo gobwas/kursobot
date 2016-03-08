@@ -16,7 +16,6 @@ RUN addgroup kursobot
 RUN useradd -g kursobot kursobot
 
 #ENTRYPOINT /usr/bin/supervisord -c /mnt/kursobot/config/kursobotd.ini
-CMD ["cp", "-v", "/mnt/kursobot/tls/server.crt", "/tmp/server.crt"]
 CMD ["/usr/bin/supervisord", "-c", "/mnt/kursobot/config/kursobotd.ini"]
 
 EXPOSE 8443
