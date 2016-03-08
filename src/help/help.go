@@ -1,2 +1,2 @@
-//go:generate include -file=$PWD/help.md -name=HelpContents
+//go:___generate include -file=$PWD/help.md -name=HelpContents
 package help
